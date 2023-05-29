@@ -120,14 +120,11 @@ impl TradeMapper {
       ,
       incomes.iter().map(|p| params! {
         "time" => &p["time"],
-        "name" => &p["name"],
-        "symbol" => &p["symbol"],
         "type" => &p["type"],
-        "side" => &p["side"],
-        "price" => &p["price"],
-        "orig_qty" => &p["orig_qty"],
-        "executed_qty" => &p["executed_qty"],
-        "reduce_only" => &p["reduce_only"],
+        "asset" => &p["asset"],
+        "amount" => &p["amount"],
+        "tran_id" => &p["tran_id"],
+        "status" => &p["status"]
       })
     );
 
