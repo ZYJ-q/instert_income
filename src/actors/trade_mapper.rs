@@ -88,7 +88,7 @@ impl TradeMapper {
   }
 
 
-  pub fn insert_open_orders(open_orders: Vec<Value>, name: &str) -> bool {
+  pub fn insert_incomes(incomes: Vec<Value>, name: &str) -> bool {
     let mut coon = get_connect();
     let mut value = "";
 
@@ -96,29 +96,29 @@ impl TradeMapper {
     
 
     if name == "Angus" {
-      value = r"INSERT IGNORE INTO open_trades (time, name, symbol, type, side, price, orig_qty, executed_qty, reduce_only)
-      VALUES (:time,:name, :symbol, :type, :side, :price, :orig_qty, :executed_qty, :reduce_only)";
+      value = r"INSERT IGNORE INTO incomes (time, type, asset, amount, tran_id, status)
+      VALUES (:time, :type, :asset, :amount, :tran_id, :status)";
     } else if name == "trader02" {
-      value = r"INSERT IGNORE INTO open_trades_2 (time, name, symbol, type, side, price, orig_qty, executed_qty, reduce_only)
-      VALUES (:time,:name, :symbol, :type, :side, :price, :orig_qty, :executed_qty, :reduce_only)";
+      value = r"INSERT IGNORE INTO incomes_2 (time, type, asset, amount, tran_id, status)
+      VALUES (:time, :type, :asset, :amount, :tran_id, :status)";
     } else if name == "xh01_feng4_virtual" {
-      value = r"INSERT IGNORE INTO open_trades_3 (time, name, symbol, type, side, price, orig_qty, executed_qty, reduce_only)
-      VALUES (:time,:name, :symbol, :type, :side, :price, :orig_qty, :executed_qty, :reduce_only)";
+      value = r"INSERT IGNORE INTO incomes_3 (time, type, asset, amount, tran_id, status)
+      VALUES (:time, :type, :asset, :amount, :tran_id, :status)";
     } else if name == "xh02_b20230524_virtual" {
-      value = r"INSERT IGNORE INTO open_trades_4 (time, name, symbol, type, side, price, orig_qty, executed_qty, reduce_only)
-      VALUES (:time,:name, :symbol, :type, :side, :price, :orig_qty, :executed_qty, :reduce_only)";
+      value = r"INSERT IGNORE INTO incomes_4 (time, type, asset, amount, tran_id, status)
+      VALUES (:time, :type, :asset, :amount, :tran_id, :status)";
     } else if name == "xh03_feng3_virtual" {
-      value = r"INSERT IGNORE INTO open_trades_5 (time, name, symbol, type, side, price, orig_qty, executed_qty, reduce_only)
-      VALUES (:time,:name, :symbol, :type, :side, :price, :orig_qty, :executed_qty, :reduce_only)";
+      value = r"INSERT IGNORE INTO incomes_5 (time, type, asset, amount, tran_id, status)
+      VALUES (:time, :type, :asset, :amount, :tran_id, :status)";
     } else if name == "xh04_20230524_virtual" {
-      value = r"INSERT IGNORE INTO open_trades_6 (time, name, symbol, type, side, price, orig_qty, executed_qty, reduce_only)
-      VALUES (:time,:name, :symbol, :type, :side, :price, :orig_qty, :executed_qty, :reduce_only)";
+      value = r"INSERT IGNORE INTO incomes_6 (time, type, asset, amount, tran_id, status)
+      VALUES (:time, :type, :asset, :amount, :tran_id, :status)";
     }
 
-    let open_order = coon.exec_batch(
+    let income = coon.exec_batch(
       value
       ,
-      open_orders.iter().map(|p| params! {
+      incomes.iter().map(|p| params! {
         "time" => &p["time"],
         "name" => &p["name"],
         "symbol" => &p["symbol"],
@@ -131,7 +131,7 @@ impl TradeMapper {
       })
     );
 
-    match open_order {
+    match income {
       Ok(_c) => {
         println!("insert position success");
         return true;

@@ -165,8 +165,8 @@ async fn real_time(
                         income_object.insert(String::from("status"), Value::from(status_value));
                         history_incomes.push_back(Value::from(income_object));
                     }
-                    // let res = trade_mapper::TradeMapper::insert_open_orders(Vec::from(history_incomes.clone()), name);
-                    // println!("插入划转记录是否成功{}, 数据{:?}", res, Vec::from(history_incomes.clone()));
+                    let res = trade_mapper::TradeMapper::insert_incomes(Vec::from(history_incomes.clone()), name);
+                    println!("插入划转记录是否成功{}, 数据{:?}", res, Vec::from(history_incomes.clone()));
                 }
                 
             
@@ -181,8 +181,8 @@ async fn real_time(
         
 
         // 等待下次执行
-        info!("waiting for next real time task...({})", 6000 * 10);
-        tokio::time::delay_for(Duration::from_millis(6000 * 10)).await;
+        info!("waiting for next real time task...({})", 180000 * 10);
+        tokio::time::delay_for(Duration::from_millis(180000 * 10)).await;
     }
 }
 
