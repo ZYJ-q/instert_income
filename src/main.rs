@@ -122,21 +122,22 @@ async fn real_time(
                     println!("没有划转记录")
                 } else {
                     let rows = vec.get("rows").unwrap().as_array().unwrap();
+                    println!("rows数据{:?}", rows);
                     for r in rows {
                         let obj = r.as_object().unwrap();
                         let mut income_object: Map<String, Value> = Map::new();
                         let asset = obj.get("asset").unwrap().as_str().unwrap();
                         let amount = obj.get("amount").unwrap().as_str().unwrap();
                         let tran_id = obj.get("tranId").unwrap().as_i64().unwrap();
-                        let r#type = obj.get("type").unwrap().as_str().unwrap();
+                        let r#type = obj.get("type").unwrap().as_i64().unwrap();
                         let mut type_value = "";
-                        if r#type == "1" {
+                        if r#type == 1 {
                             type_value = "现货==>>USDT本位合约"
-                        } else if r#type == "2" {
+                        } else if r#type == 2 {
                             type_value = "USDT本位合约==>>现货"
-                        } else if r#type == "3" {
+                        } else if r#type == 3 {
                             type_value = "现货==>>币本位合约"
-                        } else if r#type == "4" {
+                        } else if r#type == 4 {
                             type_value = "币本位合约==>>现货"
                         }
                         let millis = obj.get("timestamp").unwrap().as_i64().unwrap();
