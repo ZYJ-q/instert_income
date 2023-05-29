@@ -20,7 +20,7 @@
         },
         "futures": [
             {
-                "base_url": "https://fapi.binance.com",
+                "base_url": "https://api.binance.com",
                 "api_key": "YJ1N9IZvxjWHAJBNAT5yDeMwyQ4kEc2gxafVcGMoiNg3GFXwJBf5cwIqfh06iwuX",
                 "secret_key": "yvQhcfz9H76HKv2VEGkytvjFKjmMv1oksTj1uvOAnZJIaqEsNO1nyioxbhjQZQN3",
                 "name": "Angus",
