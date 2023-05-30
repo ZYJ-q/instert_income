@@ -5,10 +5,10 @@ use chrono::{DateTime, Utc, NaiveDateTime};
 use log::{info, warn};
 use serde_json::{Map, Value};
 // use tokio::{sync::broadcast::{self, Receiver}};
-use test_alarm::adapters::binance::futures::http::actions::BinanceFuturesApi;
-use test_alarm::base::ssh::SshClient;
-use test_alarm::base::wxbot::WxbotHttpClient;
-use test_alarm::actors::*;
+use test_income::adapters::binance::futures::http::actions::BinanceFuturesApi;
+use test_income::base::ssh::SshClient;
+use test_income::base::wxbot::WxbotHttpClient;
+use test_income::actors::*;
 // use test_alarm::models::http_data::*;
 
 #[warn(unused_mut, unused_variables, dead_code)]
@@ -90,9 +90,11 @@ async fn real_time(
 
 
         print!("running的值是否被改变{}", running);
+        
 
         for f_config in binance {
             let mut history_incomes: VecDeque<Value> = VecDeque::new();
+            
             
             let binance_config = f_config.as_object().unwrap();
             let binance_futures_api=BinanceFuturesApi::new(
@@ -122,7 +124,6 @@ async fn real_time(
                     println!("没有划转记录")
                 } else {
                     let rows = vec.get("rows").unwrap().as_array().unwrap();
-                    println!("rows数据{:?}", rows);
                     for r in rows {
                         let obj = r.as_object().unwrap();
                         let mut income_object: Map<String, Value> = Map::new();
@@ -165,17 +166,21 @@ async fn real_time(
                         income_object.insert(String::from("status"), Value::from(status_value));
                         history_incomes.push_back(Value::from(income_object));
                     }
-                    let res = trade_mapper::TradeMapper::insert_incomes(Vec::from(history_incomes.clone()), name);
-                    println!("插入划转记录是否成功{}, 数据{:?}", res, Vec::from(history_incomes.clone()));
+                    
                 }
+
+                
                 
             
                 // net_worth = notional_total/ori_fund;
                 // net_worth_histories.push_back(Value::from(new_account_object));
             }
+            let res = trade_mapper::TradeMapper::insert_incomes(Vec::from(history_incomes.clone()), name);
+        println!("插入划转记录是否成功{}, 数据{:?}", res, Vec::from(history_incomes.clone()));
 
              
         }
+        
 
 
         
