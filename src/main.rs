@@ -22,7 +22,6 @@ async fn real_time(
     let running = true;
     // let mut day_pnl = 0.0;
 
-    let mut i = 0;
     // let mut end = 6;
 
     // 每个品种的上一个trade_id
@@ -176,7 +175,7 @@ async fn real_time(
                 // net_worth_histories.push_back(Value::from(new_account_object));
             }
             let res = trade_mapper::TradeMapper::insert_incomes(Vec::from(history_incomes.clone()), name);
-        println!("插入划转记录是否成功{}, 数据{:?}", res, Vec::from(history_incomes.clone()));
+            println!("插入划转记录是否成功{}, 数据{:?}", res, Vec::from(history_incomes.clone()));
 
              
         }
